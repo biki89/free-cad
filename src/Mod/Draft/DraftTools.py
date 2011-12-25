@@ -3580,41 +3580,15 @@ class Point:
         return {'Pixmap'  : 'Draft_Point',
                 'MenuText': QtCore.QT_TRANSLATE_NOOP("Draft_Point", "Point"),
                 'ToolTip': QtCore.QT_TRANSLATE_NOOP("Draft_Point", "Creates a point object")}
-    
-    def Activated(self):
-        self.view = FreeCADGui.ActiveDocument.ActiveView
-#        self.stack = []
-#        self.point = None
-#        # adding 2 callback functions
-#        self.callbackClick = self.view.addEventCallbackPivy(coin.SoMouseButtonEvent.getClassTypeId(),self.click)
-#        self.callbackMove = self.view.addEventCallbackPivy(coin.SoLocation2Event.getClassTypeId(),self.move)
-        FreeCADGui.Snapper.getPoint(callback=clicked)
 
-#    def move(self,event_cb):
-#        event = event_cb.getEvent()
-#        mousepos = event.getPosition().getValue()
-#        ctrl = event.wasCtrlDown()
-#        self.point = FreeCADGui.Snapper.snap(mousepos,active=ctrl)
-#        
-#    def click(self,event_cb):
-#        event = event_cb.getEvent()
-#        if event.getState() == coin.SoMouseButtonEvent.DOWN:
-#            if self.point:
-#                self.stack.append(self.point)
-#                if len(self.stack) == 1:
-#                    self.view.removeEventCallbackPivy(coin.SoMouseButtonEvent.getClassTypeId(),self.callbackClick)
-#                    self.view.removeEventCallbackPivy(coin.SoLocation2Event.getClassTypeId(),self.callbackMove)
-#                    FreeCAD.ActiveDocument.openTransaction("Create Point")
-#                    Draft.makePoint((self.stack[0][0]),(self.stack[0][1]),0.0)
-#                    FreeCAD.ActiveDocument.commitTransaction()
-#                    FreeCADGui.Snapper.off()
-
-    def clicked(point):
-        FreeCAD.Console.PrintMessage("got a 3D point: "+ str(point)+"\n")
+    def clicked(self,point):
         ptvec = point
         Draft.makePoint(ptvec[0],ptvec[1],ptvec[2])
         FreeCADGui.Snapper.off()
 
+    def Activated(self):
+        self.view = FreeCADGui.ActiveDocument.ActiveView
+        FreeCADGui.Snapper.getPoint(callback=self.clicked)
 
 
 #---------------------------------------------------------------------------
