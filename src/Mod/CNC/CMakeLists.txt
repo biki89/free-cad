@@ -10,10 +10,10 @@ SET(CNCIcons_SRCS
 )
 SOURCE_GROUP("cncicons" FILES ${CNCIcons_SRCS})
 
-SET(Machining_SRCS
-    Machining/__init__.py
+SET(machining_ops_SRCS
+    machining_ops/__init__.py
 )
-SOURCE_GROUP("Machining" FILES ${Machining_SRCS})
+SOURCE_GROUP("machining_ops" FILES ${machining_ops_SRCS})
 
 SET(utils_SRCS
     utils/__init__.py
@@ -23,7 +23,7 @@ SET(utils_SRCS
 )
 SOURCE_GROUP("utils" FILES ${utils_SRCS})
 
-SET(all_files ${CNCMain_SRCS} ${CNCIcons_SRCS} ${utils_SRCS} ${Machining_SRCS})
+SET(all_files ${CNCMain_SRCS} ${CNCIcons_SRCS} ${utils_SRCS} ${machining_ops_SRCS})
 
 ADD_CUSTOM_TARGET(CNC ALL
     SOURCES ${all_files}
@@ -47,9 +47,9 @@ INSTALL(
 
 INSTALL(
     FILES
-        ${Machining_SRCS}
+        ${machining_ops_SRCS}
     DESTINATION
-        Mod/CNC/Machining
+        Mod/CNC/machining_ops
 )
 
 INSTALL(
