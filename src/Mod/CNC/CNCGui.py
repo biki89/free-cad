@@ -37,7 +37,7 @@ except:
 
 class CreateOp:
     def Activiated(self):
-        import Machining
+        import machining_ops
 
     def GetResources(self):
         from utils import Paths, Translator
