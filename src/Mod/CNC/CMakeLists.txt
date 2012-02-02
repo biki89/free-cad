@@ -1,3 +1,5 @@
+add_subdirectory(libs/libarea/)
+
 SET(CNCMain_SRCS
     InitGui.py
     CNCGui.py
@@ -23,7 +25,12 @@ SET(utils_SRCS
 )
 SOURCE_GROUP("utils" FILES ${utils_SRCS})
 
-SET(all_files ${CNCMain_SRCS} ${CNCIcons_SRCS} ${utils_SRCS} ${machining_ops_SRCS})
+SET(libs_SO
+    libs/libarea/area.so
+)
+
+
+SET(all_files ${CNCMain_SRCS} ${CNCIcons_SRCS} ${utils_SRCS} ${machining_ops_SRCS}  )
 
 ADD_CUSTOM_TARGET(CNC ALL
     SOURCES ${all_files}
