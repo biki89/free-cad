@@ -26,6 +26,7 @@ class CNCWorkbench (Workbench ):
     """CNC module. Here toolbars & icons are placed. """
     from utils import Paths
     import CNCGui
+    from machining_ops import profile_op1 as profile
 #    import newTab3
 #    from newTab3 import runTab
 
@@ -36,6 +37,10 @@ class CNCWorkbench (Workbench ):
     ToolTip = "A CNC programming workbench using python libs"
 #    MenuText = str(Translator.translate("CNC Workbench"))
 #    ToolTip = str(Translator.translate("CNC Workbench"))
+
+#    profile = Paths.modulePath() + "/machining_ops/"
+#    import profile
+
     def Initialize(self):
 
         FreeCAD.Console.PrintWarning("Nothing is set up yet\n")
@@ -68,13 +73,15 @@ class CNCWorkbench (Workbench ):
 #        self.tab2=QtGui.QDialog()
 #        self.tab.addTab(self.tab2,"A Special Tab")
 #        self.tab2.show()
-        FreeCAD.Console.PrintMessage("I'm alive!!!!!\n")
+        FreeCAD.Console.PrintMessage("It's alive!!!!!\n")
+        self.profile.createTask()
+
 
 
     def Deactivated(self):
 #        tab = getComboView(getMainWindow())
 #        tab.removeTab(2)
-        FreeCAD.Console.PrintMessage("It's dead Jim!\n")
+        FreeCAD.Console.PrintMessage("One of our 'red shirts' on the planet surface is dead Jim!\n")
 
 #    def ContextMenu(self, recipient):
 #        if (recipient == "View"):

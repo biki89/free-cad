@@ -84,19 +84,22 @@ target_link_libraries(area ${Boost_LIBRARIES} )
 set_target_properties(area PROPERTIES PREFIX "") 
 
 
+#I want to install this locally in /Mod/CNC/libs so the next 
+#section of code isn't needed 
+
 #
 # this figures out where to install the Python modules
 #
-execute_process(
-    COMMAND python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()"
-    OUTPUT_VARIABLE Python_site_packages
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-MESSAGE(STATUS "Python libraries will be installed to: " ${Python_site_packages})
+#execute_process(
+#    COMMAND python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()"
+#    OUTPUT_VARIABLE Python_site_packages
+#    OUTPUT_STRIP_TRAILING_WHITESPACE
+#)
+#MESSAGE(STATUS "Python libraries will be installed to: " ${Python_site_packages})
 
-# this installs the python library
-install(
-	TARGETS area
-	LIBRARY DESTINATION ${Python_site_packages}
-)
+## this installs the python library
+#install(
+#	TARGETS area
+#	LIBRARY DESTINATION ${Python_site_packages}
+#)
 

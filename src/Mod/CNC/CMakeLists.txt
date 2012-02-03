@@ -117,6 +117,35 @@ foreach(p IN LISTS pattern_files)
 endforeach()
 
 
+#check to see if the backplot directory needs to be created
+#and populated 
+if(IS_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/backplot/)
+    message("CNC Workbench backplot directory is already there")
+else(IS_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/backplot/)
+    message("CNC Workbench backplot directory does not exist")
+    message("creating it now....")
+    file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/backplot/)
+endif(IS_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/backplot/)
+
+#copy backplot files
+file( GLOB_RECURSE pattern_files RELATIVE
+  "${CMAKE_CURRENT_SOURCE_DIR}/" "${CMAKE_CURRENT_SOURCE_DIR}/backplot/*.py" )
+foreach(p IN LISTS pattern_files)
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${p}
+    ${CMAKE_BINARY_DIR}/Mod/CNC/backplot/ ${p} COPYONLY)
+endforeach()
+
+
+
+#check to see if the tmp directory needs to be created
+#and populated 
+if(IS_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/tmp/)
+    message("CNC Workbench tmp directory is already there")
+else(IS_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/tmp/)
+    message("CNC Workbench tmp directory does not exist")
+    message("creating it now....")
+    file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/tmp/)
+endif(IS_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/tmp/)
 
 #I found that this needed to go towards the end of the script
 #otherwise the *.so files weren't copied in
