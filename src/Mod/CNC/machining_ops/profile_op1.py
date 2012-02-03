@@ -23,6 +23,7 @@
 import os
 import time
 import math
+from utils import Paths
 from draftlibs import fcvec,fcgeo
 from FreeCAD import Vector,Base,Part
 import FreeCADGui
@@ -36,7 +37,7 @@ from PyQt4 import QtGui,QtCore
 class TaskPanelCurves:
     def __init__(self):
         #self.ui = App.getResourceDir() + "src/Mod/TemplatePyMod/TaskPanel.ui"
-        self.ui = "/home/danfalck/Documents/freecad/curve_output/TaskPanelCurve.ui"
+        self.ui = Paths.modulePath() + "/Gui/TaskPanelCurve.ui"
 
     def accept(self):
         return True
@@ -204,15 +205,23 @@ class TaskPanelCurves:
     def print_it(self):
         collector = ''
         headerinfo = '''
-import sys
-sys.path.insert(0,'/usr/lib/heekscnc/')
+import os,sys
+libs = os.getcwd() + '/Mod/CNC/libs'
+print libs
+sys.path.insert(0,libs)
+posts = os.getcwd() + '/Mod/CNC/posts'
+print posts
+sys.path.insert(0,posts)
+machining  = os.getcwd() + '/Mod/CNC/machining_ops'
+print machining
+sys.path.insert(0,machining)
 import math
 import area
 area.set_units(1)
 import kurve_funcs
-from nc.nc import *
-import nc.emc2b
-output('/tmp/test.tap')
+from nc import *
+import centroid1
+output(os.getcwd()+'/Mod/CNC/tmp/test.tap')
 program_begin(123, 'Test program')
 absolute()
 metric()
@@ -306,7 +315,8 @@ metric()
         FreeCAD.Console.PrintMessage("program_end()\n")
         collector+=("program_end()\n")
 
-        pyout = '/tmp/post.py'
+        pyout = os.getcwd()+'/Mod/CNC/tmp/post.py'
+        print pyout
         FILE = open(pyout,"w")
 
         # Write all the lines at once:
@@ -341,10 +351,11 @@ metric()
 #        cncscript= "/home/danfalck/Documents/freecad/backplot/curve_test.py"
 #        call(["python", cncscript])
 
-        fin = "/tmp/test.tap"
-        fout = "/tmp/test.py"
-        call(["/home/danfalck/Documents/freecad/backplot/mill_read.py", fin, fout])
-        execfile("/tmp/test.py")
+        fin = os.getcwd()+"/Mod/CNC/tmp/test.tap"
+        fout = os.getcwd()+"/Mod/CNC/tmp/test.py"
+        print os.getcwd()+"/Mod/CNC/backplot/mill_read.py"
+        call([os.getcwd()+"/Mod/CNC/backplot/mill_read.py", fin, fout])
+        execfile(os.getcwd()+"/Mod/CNC/tmp/test.py")
 
 ##        os.remove("/tmp/test.py")
 

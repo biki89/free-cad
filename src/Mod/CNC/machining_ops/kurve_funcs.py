@@ -5,10 +5,18 @@
 # This program is released under the New BSD license. See the file COPYING for details.
 ################################################################################
 
+import os,sys
+libs = os.getcwd().replace('machining_ops', 'libs')
+#print libs
+sys.path.insert(0,libs)
+posts = os.getcwd().replace('machining_ops', 'posts')
+#print posts
+sys.path.insert(0,posts)
 import math
-from nc.nc import *
 import area
+from nc import *
 
+use_CRC = False
 def make_smaller( curve, start = None, finish = None, end_beyond = False ):
     if start != None:
         curve.ChangeStart(curve.NearestPoint(start))
@@ -239,7 +247,7 @@ def profile(curve, direction = "on", radius = 1.0, offset_extra = 0.0, roll_radi
 
     offset_curve = area.Curve(curve)
     if direction == "on":
-        use_CRC() == False 
+        use_CRC == False 
         
         
     if direction != "on":
@@ -248,7 +256,7 @@ def profile(curve, direction = "on", radius = 1.0, offset_extra = 0.0, roll_radi
 
         # get tool diameter
         offset = radius + offset_extra
-        if use_CRC() == False or (use_CRC()==True and CRC_nominal_path()==True):
+        if use_CRC == False or (use_CRC==True and CRC_nominal_path==True):
             if direction == "right":
                 offset = -offset
             offset_success = offset_curve.Offset(offset)
@@ -303,7 +311,7 @@ def profile(curve, direction = "on", radius = 1.0, offset_extra = 0.0, roll_radi
         add_roll_on(offset_curve, roll_on_curve, direction, roll_radius, offset_extra, roll_on)
         roll_off_curve = area.Curve()
         add_roll_off(offset_curve, roll_off_curve, direction, roll_radius, offset_extra, roll_off)
-        if use_CRC():
+        if use_CRC:
             crc_start_point = area.Point()
             add_CRC_start_line(offset_curve,roll_on_curve,roll_off_curve,radius,direction,crc_start_point,lead_in_line_len)
         
@@ -315,7 +323,7 @@ def profile(curve, direction = "on", radius = 1.0, offset_extra = 0.0, roll_radi
         s = roll_on_curve.FirstVertex().p
         
         # start point 
-        if use_CRC():
+        if use_CRC:
             rapid(crc_start_point.x,crc_start_point.y)
         else:
             rapid(s.x, s.y)
@@ -328,7 +336,7 @@ def profile(curve, direction = "on", radius = 1.0, offset_extra = 0.0, roll_radi
         if start_z > mat_depth: mat_depth = start_z
         feed(z = mat_depth)
 
-        if use_CRC():
+        if use_CRC:
             start_CRC(direction == "left", radius)
             # move to the startpoint
             feed(s.x, s.y)
@@ -358,7 +366,7 @@ def profile(curve, direction = "on", radius = 1.0, offset_extra = 0.0, roll_radi
         cut_curve(roll_off_curve)
 
         #add CRC end_line
-        if use_CRC():
+        if use_CRC:
             crc_end_point = area.Point()
             add_CRC_end_line(offset_curve,roll_on_curve,roll_off_curve,radius,direction,crc_end_point,lead_out_line_len)
             if direction == "on":
@@ -370,7 +378,7 @@ def profile(curve, direction = "on", radius = 1.0, offset_extra = 0.0, roll_radi
         # restore the unsplit kurve
         if len(tags) > 0:
             offset_curve = area.Curve(copy_of_offset_curve)
-        if use_CRC():
+        if use_CRC:
             end_CRC()            
         # rapid up to the clearance height
         rapid(z = clearance)
