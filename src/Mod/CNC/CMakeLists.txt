@@ -61,46 +61,60 @@ foreach(p IN LISTS pattern_files)
 endforeach()
 
 
-SET(machining_ops_SRCS
-    machining_ops/__init__.py
-)
-SOURCE_GROUP("machining_ops" FILES ${machining_ops_SRCS})
+#check to see if the machining_ops directory needs to be created
+#and populated 
+if(IS_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/machining_ops/)
+    message("CNC Workbench machining_ops directory is already there")
+else(IS_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/machining_ops/)
+    message("CNC Workbench machining_ops directory does not exist")
+    message("creating it now....")
+    file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/machining_ops/)
+endif(IS_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/machining_ops/)
 
-SET(utils_SRCS
-    utils/__init__.py
-    utils/Math.py
-    utils/Paths.py
-    utils/Translator.py
-)
-SOURCE_GROUP("utils" FILES ${utils_SRCS})
-
-
-
-SET(all_files ${CNCMain_SRCS} ${CNCIcons_SRCS} ${utils_SRCS} ${machining_ops_SRCS} ${posts_SRCS} )
-
-ADD_CUSTOM_TARGET(CNC ALL
-    SOURCES ${all_files}
-)
-
-fc_copy_sources("Mod/CNC" "CNC" ${all_files})
+#copy machining_ops
+file( GLOB_RECURSE pattern_files RELATIVE
+  "${CMAKE_CURRENT_SOURCE_DIR}/" "${CMAKE_CURRENT_SOURCE_DIR}/machining_ops/*.py" )
+foreach(p IN LISTS pattern_files)
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${p}
+    ${CMAKE_BINARY_DIR}/Mod/CNC/machining_ops/ ${p} COPYONLY)
+endforeach()
 
 
+#check to see if the utils directory needs to be created
+#and populated 
+if(IS_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/utils/)
+    message("CNC Workbench utils directory is already there")
+else(IS_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/utils/)
+    message("CNC Workbench utils directory does not exist")
+    message("creating it now....")
+    file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/utils/)
+endif(IS_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/utils/)
 
-INSTALL(
-    FILES
-        ${utils_SRCS}
-    DESTINATION
-        Mod/CNC/utils
-)
+#copy utils
+file( GLOB_RECURSE pattern_files RELATIVE
+  "${CMAKE_CURRENT_SOURCE_DIR}/" "${CMAKE_CURRENT_SOURCE_DIR}/utils/*.py" )
+foreach(p IN LISTS pattern_files)
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${p}
+    ${CMAKE_BINARY_DIR}/Mod/CNC/utils/ ${p} COPYONLY)
+endforeach()
 
+#check to see if the Gui directory needs to be created
+#and populated 
+if(IS_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/Gui/)
+    message("CNC Workbench Gui directory is already there")
+else(IS_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/Gui/)
+    message("CNC Workbench Gui directory does not exist")
+    message("creating it now....")
+    file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/Gui/)
+endif(IS_DIRECTORY ${CMAKE_BINARY_DIR}/Mod/CNC/Gui/)
 
-INSTALL(
-    FILES
-        ${machining_ops_SRCS}
-    DESTINATION
-        Mod/CNC/machining_ops
-)
-
+#copy Gui ui files
+file( GLOB_RECURSE pattern_files RELATIVE
+  "${CMAKE_CURRENT_SOURCE_DIR}/" "${CMAKE_CURRENT_SOURCE_DIR}/Gui/*.ui" )
+foreach(p IN LISTS pattern_files)
+  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/${p}
+    ${CMAKE_BINARY_DIR}/Mod/CNC/Gui/ ${p} COPYONLY)
+endforeach()
 
 
 
