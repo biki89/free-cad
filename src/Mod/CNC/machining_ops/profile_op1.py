@@ -205,14 +205,15 @@ class TaskPanelCurves:
     def print_it(self):
         collector = ''
         headerinfo = '''
+from utils import Paths
 import os,sys
-libs = os.getcwd() + '/Mod/CNC/libs'
+libs = Paths.modulePath() +'/libs'
 print libs
 sys.path.insert(0,libs)
-posts = os.getcwd() + '/Mod/CNC/posts'
+posts = Paths.modulePath() +'/posts'
 print posts
 sys.path.insert(0,posts)
-machining  = os.getcwd() + '/Mod/CNC/machining_ops'
+machining  = Paths.modulePath() +'/machining_ops'
 print machining
 sys.path.insert(0,machining)
 import math
@@ -220,8 +221,8 @@ import area
 area.set_units(1)
 import kurve_funcs
 from nc import *
-import centroid1
-output(os.getcwd()+'/Mod/CNC/tmp/test.tap')
+import emc2b
+output(Paths.modulePath() +'/tmp/test.tap')
 program_begin(123, 'Test program')
 absolute()
 metric()
