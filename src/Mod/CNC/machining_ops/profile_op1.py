@@ -205,24 +205,27 @@ class TaskPanelCurves:
     def print_it(self):
         collector = ''
         headerinfo = '''
-from utils import Paths
 import os,sys
-libs = Paths.modulePath() +'/libs'
-print libs
+abspath = os.path.abspath( __file__ )
+splitpath = os.path.split( __file__ )
+strippedpath = abspath.strip(splitpath[1])
+striptmp = len('tmp/')
+libs = strippedpath[:-striptmp]+ 'libs'
+
 sys.path.insert(0,libs)
-posts = Paths.modulePath() +'/posts'
-print posts
+posts = strippedpath[:-striptmp]+ 'posts'
+
 sys.path.insert(0,posts)
-machining  = Paths.modulePath() +'/machining_ops'
-print machining
+machining  = strippedpath[:-striptmp]+ '/machining_ops'
+
 sys.path.insert(0,machining)
 import math
 import area
 area.set_units(1)
 import kurve_funcs
 from nc import *
-import emc2b
-output(Paths.modulePath() +'/tmp/test.tap')
+import centroid1
+output(strippedpath[:-striptmp]+ 'tmp/test.tap')
 program_begin(123, 'Test program')
 absolute()
 metric()
@@ -354,7 +357,7 @@ metric()
 
         fin = Paths.modulePath() +"/tmp/test.tap"
         fout = Paths.modulePath() +"/tmp/test.py"
-        print Paths.modulePath() +"/backplot/mill_read.py"
+        #print Paths.modulePath() +"/backplot/mill_read.py"
         call([Paths.modulePath() +"/backplot/mill_read.py", fin, fout])
         execfile(Paths.modulePath() +"/tmp/test.py")
 
