@@ -315,7 +315,7 @@ metric()
         FreeCAD.Console.PrintMessage("program_end()\n")
         collector+=("program_end()\n")
 
-        pyout = os.getcwd()+'/Mod/CNC/tmp/post.py'
+        pyout = Paths.modulePath() +'/tmp/post.py'
         print pyout
         FILE = open(pyout,"w")
 
@@ -351,11 +351,11 @@ metric()
 #        cncscript= "/home/danfalck/Documents/freecad/backplot/curve_test.py"
 #        call(["python", cncscript])
 
-        fin = os.getcwd()+"/Mod/CNC/tmp/test.tap"
-        fout = os.getcwd()+"/Mod/CNC/tmp/test.py"
-        print os.getcwd()+"/Mod/CNC/backplot/mill_read.py"
-        call([os.getcwd()+"/Mod/CNC/backplot/mill_read.py", fin, fout])
-        execfile(os.getcwd()+"/Mod/CNC/tmp/test.py")
+        fin = Paths.modulePath() +"/tmp/test.tap"
+        fout = Paths.modulePath() +"/tmp/test.py"
+        print Paths.modulePath() +"/backplot/mill_read.py"
+        call([Paths.modulePath() +"/backplot/mill_read.py", fin, fout])
+        execfile(Paths.modulePath() +"/tmp/test.py")
 
 ##        os.remove("/tmp/test.py")
 
