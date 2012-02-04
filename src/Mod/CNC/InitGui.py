@@ -26,25 +26,14 @@ class CNCWorkbench (Workbench ):
     """CNC module. Here toolbars & icons are placed. """
     from utils import Paths
     import CNCGui
-#    from machining_ops import profile_op1 as profile
-#    import newTab3
-#    from newTab3 import runTab
+
 
     Icon = Paths.iconsPath() + "/end_mill.xpm"
-#    Icon = Paths.iconsPath() + "/end_mill.png"
-#    Icon = Paths.iconsPath() + "/Ico.png"
+
     MenuText = "CNC"
     ToolTip = "A CNC programming workbench using python libs"
-#    MenuText = str(Translator.translate("CNC Workbench"))
-#    ToolTip = str(Translator.translate("CNC Workbench"))
-
-#    profile = Paths.modulePath() + "/machining_ops/"
-#    import profile
 
     def Initialize(self):
-
-        #FreeCAD.Console.PrintWarning("There isn't much going on yet\n")
-        # run self-tests
         depsOK = False
         try:
             from pivy import coin
@@ -68,11 +57,11 @@ class CNCWorkbench (Workbench ):
             FreeCAD.Console.PrintMessage("OK, let's try to do something now\n")
 
         # ToolBar
-        list = ["CNC_Profile"]
+        list = ["CNC_Profile","CNC_Pocket","CNC_Drill"]
         self.appendToolbar("CNC",list)
         
         # Menu
-        list = ["CNC_Profile"]
+        list = ["CNC_Profile","CNC_Pocket","CNC_Drill"]
         self.appendMenu("CNC",list)
 
 
