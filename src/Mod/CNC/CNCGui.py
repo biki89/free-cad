@@ -34,15 +34,11 @@ try:
 except:
     FreeCAD.Console.PrintMessage("Error: PyQt4 package must be installed on your system to use the CNC module.")
 
-
-
 class ProfileOp:
     def Activated(self):
         from machining_ops import profile_op1 as profile
         profile.createTask()
-#        profile.load()
         FreeCAD.Console.PrintMessage("profile op activated\n")
-
 
     def GetResources(self):
         from utils import Paths, Translator
@@ -51,4 +47,29 @@ class ProfileOp:
         ToolTip  = str(Translator.translate('Create a profile machining op'))
         return {'Pixmap' : IconPath, 'MenuText': MenuText, 'ToolTip': ToolTip} 
 
+class PocketOp:
+    def Activated(self):
+        FreeCAD.Console.PrintMessage("pocket op not done yet\n")
+
+    def GetResources(self):
+        from utils import Paths, Translator
+        IconPath = Paths.iconsPath() + "/pocket.png"
+        MenuText = str(Translator.translate('Pocket Milling'))
+        ToolTip  = str(Translator.translate('Create a pocket machining op'))
+        return {'Pixmap' : IconPath, 'MenuText': MenuText, 'ToolTip': ToolTip} 
+
+class DrillOp:
+    def Activated(self):
+        FreeCAD.Console.PrintMessage("drill op not done yet\n")
+
+    def GetResources(self):
+        from utils import Paths, Translator
+        IconPath = Paths.iconsPath() + "/drill.png"
+        MenuText = str(Translator.translate('Drilling'))
+        ToolTip  = str(Translator.translate('Create a drilling op'))
+        return {'Pixmap' : IconPath, 'MenuText': MenuText, 'ToolTip': ToolTip} 
+
 FreeCADGui.addCommand('CNC_Profile', ProfileOp())
+FreeCADGui.addCommand('CNC_Pocket', PocketOp())
+FreeCADGui.addCommand('CNC_Drill', DrillOp())
+
