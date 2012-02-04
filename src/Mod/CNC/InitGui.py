@@ -26,14 +26,14 @@ class CNCWorkbench (Workbench ):
     """CNC module. Here toolbars & icons are placed. """
     from utils import Paths
     import CNCGui
-    from machining_ops import profile_op1 as profile
+#    from machining_ops import profile_op1 as profile
 #    import newTab3
 #    from newTab3 import runTab
 
     Icon = Paths.iconsPath() + "/end_mill.xpm"
 #    Icon = Paths.iconsPath() + "/end_mill.png"
 #    Icon = Paths.iconsPath() + "/Ico.png"
-    MenuText = "CNC Machining"
+    MenuText = "CNC"
     ToolTip = "A CNC programming workbench using python libs"
 #    MenuText = str(Translator.translate("CNC Workbench"))
 #    ToolTip = str(Translator.translate("CNC Workbench"))
@@ -43,7 +43,7 @@ class CNCWorkbench (Workbench ):
 
     def Initialize(self):
 
-        FreeCAD.Console.PrintWarning("Nothing is set up yet\n")
+        #FreeCAD.Console.PrintWarning("There isn't much going on yet\n")
         # run self-tests
         depsOK = False
         try:
@@ -58,14 +58,22 @@ class CNCWorkbench (Workbench ):
             FreeCAD.Console.PrintWarning("Error: Unknown error while trying to load Pivy\n")
         else:
             try:
-                from PySide import QtGui,QtCore
+                from PyQt4 import QtGui,QtCore
             except ImportError:
-                FreeCAD.Console.PrintWarning("Error: PySide not found, Draft workbench will be disabled.\n")
+                FreeCAD.Console.PrintWarning("Error: PyQt not found, CNC workbench will be disabled.\n")
             else:
                 depsOK = True
 
         if depsOK:
-            FreeCAD.Console.PrintMessage("everything checked out ok\n")
+            FreeCAD.Console.PrintMessage("OK, let's try to do something now\n")
+
+        # ToolBar
+        list = ["CNC_Profile"]
+        self.appendToolbar("CNC",list)
+        
+        # Menu
+        list = ["CNC_Profile"]
+        self.appendMenu("CNC",list)
 
 
     def Activated(self):
@@ -74,14 +82,14 @@ class CNCWorkbench (Workbench ):
 #        self.tab.addTab(self.tab2,"A Special Tab")
 #        self.tab2.show()
         FreeCAD.Console.PrintMessage("It's alive!!!!!\n")
-        self.profile.createTask()
+#        self.profile.createTask()
 
 
 
     def Deactivated(self):
 #        tab = getComboView(getMainWindow())
 #        tab.removeTab(2)
-        FreeCAD.Console.PrintMessage("One of our 'red shirts' on the planet surface is dead Jim!\n")
+        FreeCAD.Console.PrintMessage("Jim, another 'red shirt' died on the planet's surface!\n")
 
 #    def ContextMenu(self, recipient):
 #        if (recipient == "View"):
