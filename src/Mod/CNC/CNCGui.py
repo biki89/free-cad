@@ -64,7 +64,7 @@ class DrillOp:
 
     def GetResources(self):
         from utils import Paths, Translator
-        IconPath = Paths.iconsPath() + "/drill.png"
+        IconPath = Paths.iconsPath() + "/drilling.png"
         MenuText = str(Translator.translate('Drilling'))
         ToolTip  = str(Translator.translate('Create a drilling op'))
         return {'Pixmap' : IconPath, 'MenuText': MenuText, 'ToolTip': ToolTip} 

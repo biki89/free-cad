@@ -30,7 +30,7 @@ class CNCWorkbench (Workbench ):
 
     Icon = Paths.iconsPath() + "/end_mill.xpm"
 
-    MenuText = "CNC"
+    MenuText = "CNC Machining"
     ToolTip = "A CNC programming workbench using python libs"
 
     def Initialize(self):
@@ -58,11 +58,11 @@ class CNCWorkbench (Workbench ):
 
         # ToolBar
         list = ["CNC_Profile","CNC_Pocket","CNC_Drill"]
-        self.appendToolbar("CNC",list)
+        self.appendToolbar("Machining",list)
         
         # Menu
         list = ["CNC_Profile","CNC_Pocket","CNC_Drill"]
-        self.appendMenu("CNC",list)
+        self.appendMenu("Machining",list)
 
 
     def Activated(self):
@@ -70,7 +70,7 @@ class CNCWorkbench (Workbench ):
 #        self.tab2=QtGui.QDialog()
 #        self.tab.addTab(self.tab2,"A Special Tab")
 #        self.tab2.show()
-        FreeCAD.Console.PrintMessage("It's alive!!!!!\n")
+        FreeCAD.Console.PrintMessage("Beam me down Scotty.\n")
 #        self.profile.createTask()
 
 
