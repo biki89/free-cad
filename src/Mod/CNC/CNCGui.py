@@ -25,25 +25,30 @@ __author__ = "Daniel Falck <ddfalck@gmail.com>"
 __url__ = ["http://free-cad.sourceforge.net"]
 
 '''
-This is the GUI part of the CNC module.
-Report to CNC.py for info
+This is the GUI part of the CNC Workbench.
 '''
 
 import FreeCAD, FreeCADGui
 try:
-    from PySide import QtCore,QtGui
+    from PyQt4 import QtCore,QtGui
 except:
-    FreeCAD.Console.PrintMessage("Error: Python-pyside package must be installed on your system to use the CNC module.")
+    FreeCAD.Console.PrintMessage("Error: PyQt4 package must be installed on your system to use the CNC module.")
 
-class CreateOp:
-    def Activiated(self):
-        import machining_ops
+
+
+class ProfileOp:
+    def Activated(self):
+        from machining_ops import profile_op1 as profile
+        profile.createTask()
+#        profile.load()
+        FreeCAD.Console.PrintMessage("profile op activated\n")
+
 
     def GetResources(self):
         from utils import Paths, Translator
-        IconPath = Paths.iconsPath() + "/Ico.png"
-        MenuText = str(Translator.translate('Create a new machining op'))
-        ToolTip  = str(Translator.translate('Create a new machining op'))
+        IconPath = Paths.iconsPath() + "/profile.png"
+        MenuText = str(Translator.translate('Profile Milling'))
+        ToolTip  = str(Translator.translate('Create a profile machining op'))
         return {'Pixmap' : IconPath, 'MenuText': MenuText, 'ToolTip': ToolTip} 
 
-#FreeCADGui.addCommand('CNC_Operation', CreateOp())
+FreeCADGui.addCommand('CNC_Profile', ProfileOp())
