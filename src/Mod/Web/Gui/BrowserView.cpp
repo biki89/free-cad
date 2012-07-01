@@ -111,25 +111,15 @@ BrowserView::BrowserView(QWidget* parent)
     //enable html5 localstorage
     QWebView w;
 
-    //w.settings()->globalSettings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
-
-    //w.settings()->globalSettings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
-
     w.settings()->globalSettings()->setAttribute(QWebSettings::LocalStorageEnabled, true);
 
     w.settings()->globalSettings()->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, true);
 
     w.settings()->globalSettings()->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, true);
 
-    //w.settings()->globalSettings()->setAttribute(QWebSettings::WebGLEnabled, true);
-    //w.settings()->globalSettings()->setAttribute(QWebSettings::AcceleratedCompositingEnabled, true);
-    //QWebSettings::enablePersistentStorage(“/tmp”);
+    QWebSettings::setOfflineStorageDefaultQuota(5*1024*1024); // this could be set higher, if needed.
 
-    QWebSettings::setOfflineStorageDefaultQuota(5*1024*1024);
-
-    QWebSettings::setOfflineWebApplicationCacheQuota(5*1024*1024);
-
-    //QWebSettings::globalSettings()->setOfflineStoragePath(“/tmp”);
+    QWebSettings::setOfflineWebApplicationCacheQuota(5*1024*1024); // this could be set higher, if needed.
 
 
     // setting background to white
