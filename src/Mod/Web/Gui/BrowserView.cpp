@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (c) 2009 J�rgen Riegel <juergen.riegel@web.de>              *
+ *   Copyright (c) 2009 Jürgen Riegel <juergen.riegel@web.de>              *
  *                                                                         *
  *   This file is part of the FreeCAD CAx development system.              *
  *                                                                         *
@@ -63,6 +63,11 @@
 using namespace WebGui;
 using namespace Gui;
 
+// try and set up local storage
+//QWebSettings::globalSettings()->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, true);
+//QWebSettings::globalSettings()->setOfflineStoragePath(QDesktopServices::storageLocation(QDesktopServices::DataLocation));
+
+
 /**
  *  Constructs a WebView widget which can be zoomed with Ctrl+Mousewheel
  *  
@@ -102,6 +107,30 @@ BrowserView::BrowserView(QWidget* parent)
 
     view->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
     view->page()->setForwardUnsupportedContent(true);
+
+    //enable html5 localstorage
+    QWebView w;
+
+    //w.settings()->globalSettings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+
+    //w.settings()->globalSettings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
+
+    w.settings()->globalSettings()->setAttribute(QWebSettings::LocalStorageEnabled, true);
+
+    w.settings()->globalSettings()->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled, true);
+
+    w.settings()->globalSettings()->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, true);
+
+    //w.settings()->globalSettings()->setAttribute(QWebSettings::WebGLEnabled, true);
+    //w.settings()->globalSettings()->setAttribute(QWebSettings::AcceleratedCompositingEnabled, true);
+    //QWebSettings::enablePersistentStorage(“/tmp”);
+
+    QWebSettings::setOfflineStorageDefaultQuota(5*1024*1024);
+
+    QWebSettings::setOfflineWebApplicationCacheQuota(5*1024*1024);
+
+    //QWebSettings::globalSettings()->setOfflineStoragePath(“/tmp”);
+
 
     // setting background to white
     QPalette palette = view->palette();
