@@ -405,6 +405,9 @@ void Document::slotDeletedObject(const App::DocumentObject& Obj)
   
     // cycling to all views of the document
     ViewProvider* viewProvider = getViewProvider(&Obj);
+#if 0 // With this we can show child objects again if this method was called by undo
+    viewProvider->onDelete(std::vector<std::string>());
+#endif
     if (viewProvider && viewProvider->getTypeId().isDerivedFrom
         (ViewProviderDocumentObject::getClassTypeId())) {
         // go through the views
@@ -504,7 +507,7 @@ bool Document::saveAs(void)
 {
     getMainWindow()->statusBar()->showMessage(QObject::tr("Save document under new filename..."));
 
-    QString exe = QString::fromUtf8(App::GetApplication().getExecutableName());
+    QString exe = qApp->applicationName();
     QString fn = QFileDialog::getSaveFileName(getMainWindow(), QObject::tr("Save %1 Document").arg(exe), 
                  FileDialog::getWorkingDirectory(), QObject::tr("%1 document (*.FCStd)").arg(exe));
     if (!fn.isEmpty()) {
